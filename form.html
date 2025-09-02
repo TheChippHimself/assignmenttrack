@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Assignment</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo_style.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Add Assignment</h2>
+    <form onsubmit="handleFormSubmit(event)">
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <select id="subject" class="form-control" required>
+                <option value="CHEM101">CHEM101</option>
+                <option value="MATH101">MATH101</option>
+                <option value="CpE 101">CpE 101</option>
+                <option value="ENGG101">ENGG101</option>
+                <option value="PATHFIT101">PATHFIT101</option>
+                <option value="GEd 105 (RPH)">GEd 105 (RPH)</option>
+                <option value="GEd 108 (Art)">GEd 108 (Art)</option>
+                <option value="GEd 104 (TCW)">GEd 104 (TCW)</option>
+                <option value="NSTP">NSTP</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="assignment" class="form-label">Assignment Name</label>
+            <input type="text" id="assignment" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Submission Date</label>
+            <input type="date" id="date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="time" class="form-label">Submission Time</label>
+            <input type="time" id="time" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Assignment</button>
+    </form>
+</div>
+
+<script src="js/assignments.js"></script>
+</body>
+</html>
