@@ -160,6 +160,55 @@ body
 	border: 2px solid transparent;
 }
 
+.big-form {
+    font-size: 1.3rem; /* Larger text */
+    padding: 2rem;     /* More space inside */
+}
+
+.big-form .form-control {
+    font-size: 1.2rem; /* Larger input text */
+    padding: 1rem;     /* Bigger input boxes */
+}
+
+.big-form .btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+}
+
+.big-home {
+    font-size: 1.3rem;   /* Bigger text */
+    padding: 2rem;
+}
+
+.big-home .list-group-item {
+    font-size: 1.2rem;   /* Bigger list items */
+    padding: 1rem;       /* More space in each assignment */
+}
+
+.big-home .btn {
+    font-size: 1.2rem;   /* Bigger button text */
+    padding: 0.8rem 1.5rem; /* Bigger buttons */
+}
+
+.big-tasks {
+    font-size: 1.3rem;   /* Larger text */
+    padding: 2rem;
+}
+
+.big-tasks table {
+    font-size: 1.2rem;   /* Bigger table text */
+}
+
+.big-tasks th,
+.big-tasks td {
+    padding: 1rem;       /* Larger table cells */
+}
+
+.big-tasks .btn {
+    font-size: 1.2rem;   /* Bigger button */
+    padding: 0.8rem 1.5rem;
+}
+
 /* start templatemo features */
 .features
 {
