@@ -30,30 +30,49 @@ function loadHomeAssignments() {
     });
 }
 
-// Load assignments into tasks page (with status dropdown)
+// Load tasks from localStorage
 function loadTasksPage() {
-    const assignments = getAssignments();
-    const table = document.getElementById("tasks-table");
-    if (!table) return;
-    table.innerHTML = "";
+    let assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+    const tableBody = document.getElementById("tasks-table");
+    tableBody.innerHTML = "";
 
-    assignments.forEach((a, index) => {
+    assignments.forEach((task, index) => {
         const row = document.createElement("tr");
+
         row.innerHTML = `
-            <td>${a.subject}</td>
-            <td>${a.name}</td>
-            <td>${a.date}</td>
-            <td>${a.time}</td>
+            <td>${task.subject}</td>
+            <td>${task.assignment}</td>
+            <td>${task.dueDate}</td>
+            <td>${task.dueTime}</td>
             <td>
-                <select class="form-control" onchange="updateStatus(${index}, this.value)">
-                    <option ${a.status === "NOT YET DONE" ? "selected" : ""}>NOT YET DONE</option>
-                    <option ${a.status === "DONE" ? "selected" : ""}>DONE</option>
+                <select onchange="updateStatus(${index}, this.value)">
+                    <option value="Not Yet Done" ${task.status === "Not Yet Done" ? "selected" : ""}>Not Yet Done</option>
+                    <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
                 </select>
             </td>
         `;
-        table.appendChild(row);
+
+        tableBody.appendChild(row);
     });
 }
+
+// Update assignment status
+function updateStatus(index, value) {
+    let assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+    assignments[index].status = value;
+
+    // If marked as Done → delete it
+    if (value === "Done") {
+        assignments.splice(index, 1);
+    }
+
+    // Save updates to localStorage
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+
+    // Reload table
+    loadTasksPage();
+}
+
 
 // Update assignment status
 function updateStatus(index, status) {
