@@ -55,6 +55,9 @@ function loadTasksPage() {
                     <option value="Done" ${status === "Done" ? "selected" : ""}>Done</option>
                 </select>
             </td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="deleteAssignment(${index})">Delete</button>
+            </td>
         `;
         tableBody.appendChild(row);
     });
@@ -77,6 +80,18 @@ function updateStatus(index, status) {
     loadTasksPage();
     loadHomeAssignments();
 }
+
+// NEW: Delete assignment function with confirmation
+function deleteAssignment(index) {
+    if (confirm("Are you sure you want to delete this assignment?")) {
+        let assignments = getAssignments();
+        assignments.splice(index, 1); // remove the assignment
+        saveAssignments(assignments);
+        loadTasksPage();
+        loadHomeAssignments();
+    }
+}
+
 
 // Handle form submission
 function handleFormSubmit(event) {
