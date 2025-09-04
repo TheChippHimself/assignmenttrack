@@ -29,36 +29,42 @@ function loadHomeAssignments() {
     });
 }
 
-// Load tasks into All Assignments page
-function loadTasksPage() {
+function loadHomeAssignments() {
     const assignments = getAssignments();
-    const tableBody = document.getElementById("tasks-table");
+    const tableBody = document.getElementById("home-assignments");
     if (!tableBody) return;
     tableBody.innerHTML = "";
 
-    assignments.forEach((task, index) => {
-        const subject = task.subject || "Undefined";
-        const name = task.name || "Undefined";
-        const date = task.date || "Not set";
-        const time = task.time || "Not set";
-        const status = task.status || "Not Yet Done";
+    const today = new Date();
 
+    assignments.filter(a => a.status === "Not Yet Done").forEach(a => {
         const row = document.createElement("tr");
+
+        // Calculate days left
+        let daysLeftText = "No due date set";
+        if (a.date) {
+            const dueDate = new Date(a.date);
+            const diffTime = dueDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays > 0) {
+                daysLeftText = `${diffDays} day(s) left`;
+            } else if (diffDays === 0) {
+                daysLeftText = "Due today!";
+            } else {
+                daysLeftText = `Overdue by ${Math.abs(diffDays)} day(s)`;
+            }
+        }
+
+        
         row.innerHTML = `
-            <td>${subject}</td>
-            <td>${name}</td>
-            <td>${date}</td>
-            <td>${time}</td>
-            <td>
-                <select onchange="updateStatus(${index}, this.value)">
-                    <option value="Not Yet Done" ${status === "Not Yet Done" ? "selected" : ""}>Not Yet Done</option>
-                    <option value="Done" ${status === "Done" ? "selected" : ""}>Done</option>
-                </select>
-            </td>
-            <td>
-                <button class="btn btn-danger btn-sm" onclick="deleteAssignment(${index})">Delete</button>
-            </td>
+            <td>${a.subject || "Undefined"}</td>
+            <td>${a.name || "Undefined"}</td>
+            <td>${a.date || "Not set"}</td>
+            <td>${a.time || "Not set"}</td>
+            <td><em>${daysLeftText}</em></td>
         `;
+
         tableBody.appendChild(row);
     });
 }
@@ -103,4 +109,57 @@ function handleFormSubmit(event) {
     addAssignment(subject, name, date, time);
     alert("Assignment Added!");
     window.location.href = "index.html";
+}
+
+// Load tasks into All Assignments page
+function loadTasksPage() {
+    const assignments = getAssignments();
+    const tableBody = document.getElementById("tasks-table");
+    if (!tableBody) return;
+    tableBody.innerHTML = "";
+
+    const today = new Date();
+
+    assignments.forEach((task, index) => {
+        const subject = task.subject || "Undefined";
+        const name = task.name || "Undefined";
+        const date = task.date || "Not set";
+        const time = task.time || "Not set";
+        const status = task.status || "Not Yet Done";
+
+        // Calculate days left
+        let daysLeftText = "No due date set";
+        if (task.date) {
+            const dueDate = new Date(task.date);
+            const diffTime = dueDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 0) {
+                daysLeftText = `${diffDays} day(s) left`;
+            } else if (diffDays === 0) {
+                daysLeftText = "Due today!";
+            } else {
+                daysLeftText = `Overdue by ${Math.abs(diffDays)} day(s)`;
+            }
+        }
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${subject}</td>
+            <td>${name}</td>
+            <td>${date}</td>
+            <td>${time}</td>
+            <td><em>${daysLeftText}</em></td>
+            <td>
+                <select onchange="updateStatus(${index}, this.value)">
+                    <option value="Not Yet Done" ${status === "Not Yet Done" ? "selected" : ""}>Not Yet Done</option>
+                    <option value="Done" ${status === "Done" ? "selected" : ""}>Done</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="deleteAssignment(${index})">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
 }

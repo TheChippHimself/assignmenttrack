@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,21 @@
 
 <div class="container mt-5 big-home">
     <h2 class="mb-4">Assignments NOT YET DONE</h2>
-    <ul id="home-assignments" class="list-group mb-3"></ul>
+
+    <!-- Table format for clearer "Days Left" column -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Assignment</th>
+                <th>Due Date</th>
+                <th>Due Time</th>
+                <th>No. of Days Left</th>
+            </tr>
+        </thead>
+        <tbody id="home-assignments"></tbody>
+    </table>
+
     <a href="form.html" class="btn btn-primary">Add New Assignment</a>
     <a href="tasks.html" class="btn btn-secondary">View All Assignments</a>
 </div>
